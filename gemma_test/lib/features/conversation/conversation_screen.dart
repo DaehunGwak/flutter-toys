@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gemma/flutter_gemma_interface.dart';
 import 'package:gemma_test/features/conversation/widget/message_widget.dart';
 
 class ConversationScreen extends StatefulWidget {
@@ -14,15 +15,34 @@ class ConversationScreen extends StatefulWidget {
 class _ConversationScreenState extends State<ConversationScreen> {
   final _scrollController = ScrollController();
   final _textController = TextEditingController();
+
   final List<String> _messages = [];
 
   @override
   void initState() {
     super.initState();
 
+    _loadModel();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _jumpToEndMessage();
     });
+  }
+
+  void _loadModel() {
+    FlutterGemmaPlugin.instance
+        .loadAssetModelWithProgress(
+            fullPath: 'model/gemma-1.1-2b-it-cpu-int4.bin')
+        .listen(
+      (progress) => debugPrint('model progress: $progress'),
+      onDone: () async {
+        await FlutterGemmaPlugin.instance.init();
+        debugPrint('model is loaded!');
+      },
+      onError: (error) {
+        debugPrint('model error: $error');
+      },
+    );
   }
 
   void _jumpToEndMessage() {

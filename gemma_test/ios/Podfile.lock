@@ -1,0 +1,47 @@
+PODS:
+  - Flutter (1.0.0)
+  - flutter_gemma (0.0.1):
+    - Flutter
+    - MediaPipeTasksGenAI (= 0.10.18)
+    - MediaPipeTasksGenAIC (= 0.10.18)
+  - large_file_handler (0.0.1):
+    - Flutter
+  - MediaPipeTasksGenAI (0.10.18):
+    - MediaPipeTasksGenAIC (= 0.10.18)
+  - MediaPipeTasksGenAIC (0.10.18)
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - flutter_gemma (from `.symlinks/plugins/flutter_gemma/ios`)
+  - large_file_handler (from `.symlinks/plugins/large_file_handler/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+
+SPEC REPOS:
+  trunk:
+    - MediaPipeTasksGenAI
+    - MediaPipeTasksGenAIC
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  flutter_gemma:
+    :path: ".symlinks/plugins/flutter_gemma/ios"
+  large_file_handler:
+    :path: ".symlinks/plugins/large_file_handler/ios"
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  flutter_gemma: d6c3830d9670b32ae4d0854d60d72690482a6c5c
+  large_file_handler: e3686e246052b0f03955789d3a04604574f80afe
+  MediaPipeTasksGenAI: e74c38e69e5cb385efc905d14ae7e9af365e69a7
+  MediaPipeTasksGenAIC: 3f6db8973f1351e9258d294113f05e42e7f9eef1
+  path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
+
+PODFILE CHECKSUM: 4e67c1d7c8bab30ed4a2a0d2c4779a9b5a19fe9c
+
+COCOAPODS: 1.16.2
