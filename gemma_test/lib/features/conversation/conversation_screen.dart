@@ -2,15 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gemma/flutter_gemma.dart';
 import 'package:gemma_test/features/conversation/widget/message_widget.dart';
 
-const _firstMessage = Message(
-  text: '앞으로 입력하는 할일 내용에 대해서 아이들도 수행하기 쉽도록 잘게 쪼개주는데 '
-      'json list 형식으로 응답해줘.'
-      '예를 들어 "앱 개발하기" 가 입력되면, '
-      '"["플랫폼 선정", "개발 언어 설정", "의도, 기획 설정", "메인 기능 기획"]" 으로 대답해. '
-      '다른 이야기는 할 필요 없어.',
-  isUser: true,
-);
-
+/// ref: https://cloud.google.com/dataflow/docs/notebooks/gemma_2_sentiment_and_summarization
 class ConversationScreen extends StatefulWidget {
   const ConversationScreen({super.key, required this.title});
 
@@ -24,7 +16,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
   final _scrollController = ScrollController();
   final _textController = TextEditingController();
 
-  final List<Message> _gemmaMessages = [_firstMessage];
+  final List<Message> _gemmaMessages = [];
 
   int _progress = 0;
   bool _isPossibleChatInput = false;
@@ -63,7 +55,10 @@ class _ConversationScreenState extends State<ConversationScreen> {
         }
       },
       onDone: () async {
-        await FlutterGemmaPlugin.instance.init();
+        await FlutterGemmaPlugin.instance.init(
+          temperature: 1.0,
+          maxTokens: 1024,
+        );
         setState(() {
           _isPossibleChatInput = true;
         });
@@ -89,7 +84,6 @@ class _ConversationScreenState extends State<ConversationScreen> {
             onPressed: () {
               setState(() {
                 _gemmaMessages.clear();
-                _gemmaMessages.add(_firstMessage);
               });
             },
             icon: const Icon(Icons.delete_outline_rounded),
@@ -129,9 +123,19 @@ class _ConversationScreenState extends State<ConversationScreen> {
                     onPressed: _isPossibleChatInputMode()
                         ? () {
                             if (_textController.text.isNotEmpty) {
-                              _sendMessage(_textController.text.trim());
+                              _sendMessage(
+                                '''
+Provide the results of doing these three tasks on the text provided below '---'
+task 1 : assess if the tone is happy = 1 , neutral = 0 or sad = -1
+task 2 : assess if the tone is depressed = 1 , neutral = 0 or joyful = -1
+task 3 : summarize the text with a maximum of 512 characters
+Return the answer as a JSON string with fields [happy, depressed, summary] do NOT explain your answer
+
+---
+${_textController.text.trim()}
+''',
+                              );
                               _textController.clear();
-                              _jumpToEndMessage();
                             }
                           }
                         : null,
@@ -154,13 +158,17 @@ class _ConversationScreenState extends State<ConversationScreen> {
       _isPossibleChatInput = false;
       _gemmaMessages.add(Message(text: message, isUser: true));
     });
-    final response =
-        await gemmaInstance.getChatResponse(messages: _gemmaMessages);
+    _jumpToEndMessage();
+
+    final response = await gemmaInstance.getChatResponse(
+      messages: _gemmaMessages, // TODO: 처음 튜닝 메세지와, 마지막 입력 메세지만 들어가도록 함
+    );
     setState(() {
       _gemmaMessages
           .add(Message(text: response ?? 'AI response something wrong 🥲'));
       _isPossibleChatInput = true;
     });
+    _jumpToEndMessage();
     debugPrint(_gemmaMessages.toString());
   }
 }
