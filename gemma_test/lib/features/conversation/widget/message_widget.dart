@@ -30,7 +30,7 @@ class MessageWidget extends StatelessWidget {
                   Radius.circular(12),
                 ),
               ),
-              child: Text(message),
+              child: SelectableText(message),
             ),
           )
         ],

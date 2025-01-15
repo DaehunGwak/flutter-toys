@@ -19,6 +19,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
   final List<Message> _gemmaMessages = [];
 
   int _progress = 0;
+  bool _isModelLoaded = false;
   bool _isPossibleChatInput = false;
 
   @override
@@ -48,10 +49,9 @@ class _ConversationScreenState extends State<ConversationScreen> {
         if (_progress != progress) {
           if (progress % 20 == 0) {
             debugPrint('${DateTime.now()}: model progress: $progress');
+            setState(() {});
           }
-          setState(() {
-            _progress = progress;
-          });
+          _progress = progress;
         }
       },
       onDone: () async {
@@ -61,6 +61,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
         );
         setState(() {
           _isPossibleChatInput = true;
+          _isModelLoaded = true;
         });
         debugPrint('${DateTime.now()}: model is loaded!');
       },
@@ -115,9 +116,9 @@ class _ConversationScreenState extends State<ConversationScreen> {
               ),
               SearchBar(
                 controller: _textController,
-                enabled: _isPossibleChatInputMode(),
+                enabled: _isPossibleChatInput,
                 textInputAction: TextInputAction.newline,
-                hintText: 'Ask something your on-device AI',
+                hintText: _extractSearchBarHintText(),
                 trailing: [
                   IconButton(
                     onPressed: _isPossibleChatInputMode()
@@ -129,7 +130,7 @@ Provide the results of doing these three tasks on the text provided below '---'
 task 1 : assess if the tone is happy = 1 , neutral = 0 or sad = -1
 task 2 : assess if the tone is depressed = 1 , neutral = 0 or joyful = -1
 task 3 : summarize the text with a maximum of 512 characters
-Return the answer as a JSON string with fields [happy, depressed, summary] do NOT explain your answer
+Return the answer as a JSON string with fields [happiness, depression, summary] do NOT explain your answer
 
 ---
 ${_textController.text.trim()}
@@ -139,7 +140,9 @@ ${_textController.text.trim()}
                             }
                           }
                         : null,
-                    icon: const Icon(Icons.send_rounded),
+                    icon: _isPossibleChatInputMode()
+                        ? const Icon(Icons.send_rounded)
+                        : const CircularProgressIndicator(),
                   ),
                 ],
               ),
@@ -150,7 +153,8 @@ ${_textController.text.trim()}
     );
   }
 
-  bool _isPossibleChatInputMode() => _progress >= 100 && _isPossibleChatInput;
+  bool _isPossibleChatInputMode() =>
+      _progress >= 100 && _isModelLoaded && _isPossibleChatInput;
 
   Future<void> _sendMessage(String message) async {
     final gemmaInstance = FlutterGemmaPlugin.instance;
@@ -161,7 +165,7 @@ ${_textController.text.trim()}
     _jumpToEndMessage();
 
     final response = await gemmaInstance.getChatResponse(
-      messages: _gemmaMessages, // TODO: 처음 튜닝 메세지와, 마지막 입력 메세지만 들어가도록 함
+      messages: _gemmaMessages,
     );
     setState(() {
       _gemmaMessages
@@ -169,6 +173,20 @@ ${_textController.text.trim()}
       _isPossibleChatInput = true;
     });
     _jumpToEndMessage();
+    setState(() {});
     debugPrint(_gemmaMessages.toString());
+  }
+
+  String _extractSearchBarHintText() {
+    if (_progress < 100) {
+      return 'Loading on-device model... $_progress%';
+    }
+    if (!_isModelLoaded) {
+      return 'Initializing on-device model...';
+    }
+    if (!_isPossibleChatInput) {
+      return 'Waiting a response...';
+    }
+    return 'Ask something your on-device AI';
   }
 }
