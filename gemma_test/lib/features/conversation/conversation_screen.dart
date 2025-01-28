@@ -49,9 +49,10 @@ class _ConversationScreenState extends State<ConversationScreen> {
         if (_progress != progress) {
           if (progress % 20 == 0) {
             debugPrint('${DateTime.now()}: model progress: $progress');
-            setState(() {});
           }
-          _progress = progress;
+          setState(() {
+            _progress = progress;
+          });
         }
       },
       onDone: () async {
