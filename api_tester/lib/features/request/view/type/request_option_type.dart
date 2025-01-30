@@ -1,0 +1,5 @@
+enum RequestOptionType {
+  headers,
+  more,
+  ;
+}
