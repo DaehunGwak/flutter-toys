@@ -1,4 +1,7 @@
+import 'package:api_tester/features/request/ui/type/method_ui_type.dart';
 import 'package:flutter/material.dart';
+
+import 'layout/method_url_layout.dart';
 
 class RequestPage extends StatefulWidget {
   const RequestPage({super.key});
@@ -8,93 +11,56 @@ class RequestPage extends StatefulWidget {
 }
 
 class _RequestPageState extends State<RequestPage> {
-  String _selectedMethod = 'GET';
+  final _urlFieldController = TextEditingController();
+
+  MethodUiType _selectedMethod = MethodUiType.get;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    DropdownButton(
-                      alignment: AlignmentDirectional.center,
-                      value: _selectedMethod,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedMethod = value ?? 'GET';
-                        });
-                      },
-                      items: [
-                        'GET',
-                        'POST',
-                        'DELETE',
-                        'UPDATE',
-                        'OPTION',
-                        'TRACE'
-                      ]
-                          .map(
-                            (method) => DropdownMenuItem<String>(
-                              value: method,
-                              child: Container(
-                                padding: const EdgeInsets.all(6.0),
-                                decoration: BoxDecoration(
-                                    color: Colors.green.shade200,
-                                    borderRadius: BorderRadius.circular(6.0)),
-                                child: Text(method),
-                              ),
-                            ),
-                          )
-                          .toList(),
-                    ),
-                    Expanded(
-                      child: TextField(
-                        maxLines: null,
-                        decoration: InputDecoration(
-                          hintText: 'Input URL',
-                          hintStyle: TextStyle(color: Colors.grey),
-                        ),
-                      ),
-                    ),
-                    // IconButton(
-                    //   icon: const Icon(
-                    //     Icons.arrow_circle_right_outlined,
-                    //     size: 32,
-                    //   ),
-                    //   onPressed: () {},
-                    // ),
-                  ],
-                ),
-              ],
-            ),
+      appBar: AppBar(
+        title: const Text('Request'),
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            children: [
+              MethodUrlLayout(
+                method: _selectedMethod,
+                onMethodChanged: (value) {
+                  _selectedMethod = value ?? MethodUiType.get;
+                  setState(() {});
+                },
+                urlController: _urlFieldController,
+              ),
+            ],
           ),
         ),
-        bottomNavigationBar: SafeArea(
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {},
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Send Request',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    SizedBox(width: 16.0),
-                    Icon(Icons.send_rounded)
-                  ],
-                ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: () {},
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Send Request',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  SizedBox(width: 16.0),
+                  Icon(Icons.send_rounded)
+                ],
               ),
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
