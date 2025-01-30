@@ -1,3 +1,4 @@
+import 'package:api_tester/features/request/ui/layout/bottom_request_layout.dart';
 import 'package:api_tester/features/request/ui/type/method_ui_type.dart';
 import 'package:flutter/material.dart';
 
@@ -38,29 +39,7 @@ class _RequestPageState extends State<RequestPage> {
           ),
         ),
       ),
-      bottomNavigationBar: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: () {},
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Send Request',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  SizedBox(width: 16.0),
-                  Icon(Icons.send_rounded)
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
+      bottomNavigationBar: const BottomRequestLayout(),
     );
   }
 }
