@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class BottomRequestLayout extends StatelessWidget {
-  const BottomRequestLayout({super.key});
+class RequestBottomLayout extends StatelessWidget {
+  const RequestBottomLayout({super.key});
 
   @override
   Widget build(BuildContext context) {

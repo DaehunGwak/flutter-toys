@@ -16,6 +16,8 @@ class MethodDropdownButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return DropdownButton(
       alignment: AlignmentDirectional.center,
+      elevation: 1,
+      underline: const SizedBox.shrink(),
       value: method,
       onChanged: onChanged,
       items: MethodUiType.values

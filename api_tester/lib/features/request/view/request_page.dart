@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../model/request.dart';
-import 'layout/bottom_request_layout.dart';
 import 'layout/method_url_layout.dart';
 import 'layout/option_input_layout.dart';
+import 'layout/request_bottom_layout.dart';
 import 'type/method_ui_type.dart';
 import 'type/request_option_type.dart';
 
@@ -16,16 +15,36 @@ class RequestPage extends StatefulWidget {
 
 class _RequestPageState extends State<RequestPage> {
   final _urlFieldController = TextEditingController();
+  final List<TextEditingController> _headerKeyControllers = [
+    TextEditingController()
+  ];
+  final List<TextEditingController> _headerValueControllers = [
+    TextEditingController()
+  ];
 
-  final RequestHeaders _headers = {};
   MethodUiType _selectedMethod = MethodUiType.get;
   RequestOptionType _selectedOption = RequestOptionType.headers;
+
+  @override
+  void dispose() {
+    _urlFieldController.dispose();
+    for (var controller in _headerKeyControllers) {
+      controller.dispose();
+    }
+    for (var controller in _headerValueControllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Request'),
+        title: const Text(
+          'Request',
+          style: TextStyle(fontWeight: FontWeight.w500),
+        ),
       ),
       body: SafeArea(
         child: Padding(
@@ -41,18 +60,31 @@ class _RequestPageState extends State<RequestPage> {
                 urlController: _urlFieldController,
               ),
               const SizedBox(height: 16.0),
-              OptionInputLayout(
-                option: _selectedOption,
-                onOptionSelectionChanged: (newOptions) {
-                  _selectedOption = newOptions.first;
-                  setState(() {});
-                },
+              Expanded(
+                child: OptionInputLayout(
+                    option: _selectedOption,
+                    onOptionSelectionChanged: (newOptions) {
+                      _selectedOption = newOptions.first;
+                      setState(() {});
+                    },
+                    headerKeyControllers: _headerKeyControllers,
+                    headerValueControllers: _headerValueControllers,
+                    onHeaderAddPressed: () {
+                      _headerKeyControllers.add(TextEditingController());
+                      _headerValueControllers.add(TextEditingController());
+                      setState(() {});
+                    },
+                    onHeaderRemovePressed: (int index) {
+                      _headerKeyControllers.removeAt(index);
+                      _headerValueControllers.removeAt(index);
+                      setState(() {});
+                    }),
               ),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: const BottomRequestLayout(),
+      bottomNavigationBar: const RequestBottomLayout(),
     );
   }
 }
