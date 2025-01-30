@@ -1,5 +1,6 @@
-import 'package:api_tester/features/request/ui/type/method_ui_type.dart';
 import 'package:flutter/material.dart';
+
+import '../type/method_ui_type.dart';
 
 class MethodDropdownButton extends StatelessWidget {
   const MethodDropdownButton({

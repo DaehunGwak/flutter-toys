@@ -1,6 +1,6 @@
-import 'package:api_tester/features/request/ui/type/method_ui_type.dart';
 import 'package:flutter/material.dart';
 
+import '../type/method_ui_type.dart';
 import '../widget/method_dropdown_button.dart';
 import '../widget/url_text_field.dart';
 
