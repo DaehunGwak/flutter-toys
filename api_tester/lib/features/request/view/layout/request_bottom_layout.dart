@@ -3,7 +3,12 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 
 class RequestBottomLayout extends StatelessWidget {
-  const RequestBottomLayout({super.key});
+  const RequestBottomLayout({
+    super.key,
+    required this.onRequestPressed,
+  });
+
+  final void Function() onRequestPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +19,7 @@ class RequestBottomLayout extends StatelessWidget {
             : const EdgeInsets.symmetric(horizontal: 16.0),
         width: double.infinity,
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: onRequestPressed,
           child: const Padding(
             padding: EdgeInsets.symmetric(vertical: 16),
             child: Row(
