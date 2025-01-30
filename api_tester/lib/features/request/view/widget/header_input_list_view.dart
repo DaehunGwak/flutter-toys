@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class HeaderInputsListView extends StatelessWidget {
+class HeaderInputsListView extends StatefulWidget {
   const HeaderInputsListView({
     super.key,
     required this.keyControllers,
@@ -13,19 +13,36 @@ class HeaderInputsListView extends StatelessWidget {
   final void Function(int index) onRemovePressed;
 
   @override
+  State<HeaderInputsListView> createState() => _HeaderInputsListViewState();
+}
+
+class _HeaderInputsListViewState extends State<HeaderInputsListView> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scrollbar(
+      controller: _scrollController,
+      scrollbarOrientation: ScrollbarOrientation.right,
       thumbVisibility: true,
       interactive: true,
       child: ListView.separated(
-        itemCount: keyControllers.length,
+        controller: _scrollController,
+        scrollDirection: Axis.vertical,
+        itemCount: widget.keyControllers.length,
         itemBuilder: (_, index) => Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Flexible(
               flex: 1,
               child: TextField(
-                controller: keyControllers[index],
+                controller: widget.keyControllers[index],
                 keyboardType: TextInputType.text,
                 maxLines: null,
                 decoration: const InputDecoration(
@@ -38,7 +55,7 @@ class HeaderInputsListView extends StatelessWidget {
             Flexible(
               flex: 2,
               child: TextField(
-                controller: valueControllers[index],
+                controller: widget.valueControllers[index],
                 keyboardType: TextInputType.text,
                 maxLines: null,
                 decoration: const InputDecoration(
@@ -50,7 +67,7 @@ class HeaderInputsListView extends StatelessWidget {
             IconButton(
               color: Colors.orange,
               icon: const Icon(Icons.remove_circle_outline_outlined),
-              onPressed: () => onRemovePressed(index),
+              onPressed: () => widget.onRemovePressed(index),
             ),
             const SizedBox(width: 4.0),
           ],

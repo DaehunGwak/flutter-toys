@@ -40,8 +40,11 @@ class OptionInputLayout extends StatelessWidget {
               onRemovePressed: onHeaderRemovePressed,
             ),
           ),
-          HeaderAddButton(
-            onPressed: onHeaderAddPressed,
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: HeaderAddButton(
+              onPressed: onHeaderAddPressed,
+            ),
           ),
         ] else
           const Text('Developing... 😂'),

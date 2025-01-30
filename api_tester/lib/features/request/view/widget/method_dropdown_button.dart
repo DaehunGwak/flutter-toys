@@ -18,6 +18,7 @@ class MethodDropdownButton extends StatelessWidget {
       alignment: AlignmentDirectional.center,
       elevation: 1,
       underline: const SizedBox.shrink(),
+      focusColor: Colors.transparent,
       value: method,
       onChanged: onChanged,
       items: MethodUiType.values

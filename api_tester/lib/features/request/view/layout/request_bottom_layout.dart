@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
 
 class RequestBottomLayout extends StatelessWidget {
@@ -7,7 +9,9 @@ class RequestBottomLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: Platform.isMacOS
+            ? const EdgeInsets.only(bottom: 16.0, left: 16.0, right: 16.0)
+            : const EdgeInsets.symmetric(horizontal: 16.0),
         width: double.infinity,
         child: ElevatedButton(
           onPressed: () {},
