@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../model/type/method_type.dart';
+
 enum MethodUiType {
   get(color: Color(0xff98ff98)),
   post(color: Color(0xff00aaff)),
@@ -15,4 +17,8 @@ enum MethodUiType {
   const MethodUiType({required this.color});
 
   final Color color;
+
+  MethodType toMethodType() {
+    return MethodType.values.byName(name);
+  }
 }

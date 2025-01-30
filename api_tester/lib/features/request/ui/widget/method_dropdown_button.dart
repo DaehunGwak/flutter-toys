@@ -22,11 +22,19 @@ class MethodDropdownButton extends StatelessWidget {
             (method) => DropdownMenuItem<MethodUiType>(
               value: method,
               child: Container(
-                padding: const EdgeInsets.all(6.0),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 6.0,
+                  horizontal: 9.0,
+                ),
                 decoration: BoxDecoration(
-                    color: method.color,
-                    borderRadius: BorderRadius.circular(6.0)),
-                child: Text(method.name.toUpperCase()),
+                  color: method.color,
+                  border: Border.all(color: Colors.black54),
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                child: Text(
+                  method.name.toUpperCase(),
+                  style: const TextStyle(fontSize: 14.0),
+                ),
               ),
             ),
           )

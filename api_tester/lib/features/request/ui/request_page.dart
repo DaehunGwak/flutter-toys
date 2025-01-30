@@ -1,8 +1,11 @@
-import 'package:api_tester/features/request/ui/layout/bottom_request_layout.dart';
-import 'package:api_tester/features/request/ui/type/method_ui_type.dart';
 import 'package:flutter/material.dart';
 
+import '../model/request.dart';
+import 'layout/bottom_request_layout.dart';
 import 'layout/method_url_layout.dart';
+import 'layout/option_input_layout.dart';
+import 'type/method_ui_type.dart';
+import 'type/request_option_type.dart';
 
 class RequestPage extends StatefulWidget {
   const RequestPage({super.key});
@@ -14,7 +17,9 @@ class RequestPage extends StatefulWidget {
 class _RequestPageState extends State<RequestPage> {
   final _urlFieldController = TextEditingController();
 
+  final RequestHeaders _headers = {};
   MethodUiType _selectedMethod = MethodUiType.get;
+  RequestOptionType _selectedOption = RequestOptionType.headers;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +39,14 @@ class _RequestPageState extends State<RequestPage> {
                   setState(() {});
                 },
                 urlController: _urlFieldController,
+              ),
+              const SizedBox(height: 16.0),
+              OptionInputLayout(
+                option: _selectedOption,
+                onOptionSelectionChanged: (newOptions) {
+                  _selectedOption = newOptions.first;
+                  setState(() {});
+                },
               ),
             ],
           ),
