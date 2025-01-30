@@ -6,9 +6,14 @@ final dio = Dio()
   ..interceptors.add(
     InterceptorsWrapper(
       onRequest: (options, handler) {
-        options.headers[HttpHeaders.userAgentHeader] = 'ordi api_tester';
         options.headers.putIfAbsent(
-            HttpHeaders.acceptHeader, () => ContentType.json.toString());
+          HttpHeaders.userAgentHeader,
+          () => 'ordi api_tester',
+        );
+        options.headers.putIfAbsent(
+          HttpHeaders.acceptHeader,
+          () => ContentType.json.toString(),
+        );
         return handler.next(options);
       },
     ),
