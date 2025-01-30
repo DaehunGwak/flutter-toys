@@ -5,6 +5,7 @@ import 'layout/option_input_layout.dart';
 import 'layout/request_bottom_layout.dart';
 import 'type/method_ui_type.dart';
 import 'type/request_option_type.dart';
+import 'widget/request_app_bar.dart';
 
 class RequestPage extends StatefulWidget {
   const RequestPage({super.key});
@@ -40,17 +41,7 @@ class _RequestPageState extends State<RequestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        surfaceTintColor: Colors.transparent,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        title: const Text(
-          'Request',
-          style: TextStyle(fontWeight: FontWeight.w500),
-        ),
-      ),
+      appBar: const RequestAppBar(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 16.0),
