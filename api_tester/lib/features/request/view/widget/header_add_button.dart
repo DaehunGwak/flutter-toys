@@ -10,17 +10,17 @@ class HeaderAddButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 128.0,
-        vertical: 8.0,
+    return SizedBox(
+      width: double.infinity,
+      child: IconButton(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        icon: const Icon(
+          Icons.add_circle_outline_rounded,
+          color: Colors.grey,
+        ),
+        iconSize: 36.0,
+        onPressed: onPressed,
       ),
-      icon: const Icon(
-        Icons.add_circle_outline_rounded,
-        color: Colors.grey,
-      ),
-      iconSize: 36.0,
-      onPressed: onPressed,
     );
   }
 }

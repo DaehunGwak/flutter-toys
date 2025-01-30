@@ -7,7 +7,7 @@ class RequestBottomLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
         width: double.infinity,
         child: ElevatedButton(
           onPressed: () {},

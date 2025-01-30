@@ -18,20 +18,23 @@ class MethodUrlLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 2.5),
-          child: MethodDropdownButton(
-            method: method,
-            onChanged: onMethodChanged,
+    return Padding(
+      padding: const EdgeInsets.only(right: 8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 2.5),
+            child: MethodDropdownButton(
+              method: method,
+              onChanged: onMethodChanged,
+            ),
           ),
-        ),
-        Expanded(
-          child: UrlTextField(controller: urlController),
-        ),
-      ],
+          Expanded(
+            child: UrlTextField(controller: urlController),
+          ),
+        ],
+      ),
     );
   }
 }

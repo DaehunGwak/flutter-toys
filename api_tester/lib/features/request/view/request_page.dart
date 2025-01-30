@@ -41,6 +41,7 @@ class _RequestPageState extends State<RequestPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         title: const Text(
           'Request',
           style: TextStyle(fontWeight: FontWeight.w500),
@@ -48,7 +49,7 @@ class _RequestPageState extends State<RequestPage> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.only(left: 16.0),
           child: Column(
             children: [
               MethodUrlLayout(
@@ -62,23 +63,24 @@ class _RequestPageState extends State<RequestPage> {
               const SizedBox(height: 16.0),
               Expanded(
                 child: OptionInputLayout(
-                    option: _selectedOption,
-                    onOptionSelectionChanged: (newOptions) {
-                      _selectedOption = newOptions.first;
-                      setState(() {});
-                    },
-                    headerKeyControllers: _headerKeyControllers,
-                    headerValueControllers: _headerValueControllers,
-                    onHeaderAddPressed: () {
-                      _headerKeyControllers.add(TextEditingController());
-                      _headerValueControllers.add(TextEditingController());
-                      setState(() {});
-                    },
-                    onHeaderRemovePressed: (int index) {
-                      _headerKeyControllers.removeAt(index);
-                      _headerValueControllers.removeAt(index);
-                      setState(() {});
-                    }),
+                  option: _selectedOption,
+                  onOptionSelectionChanged: (newOptions) {
+                    _selectedOption = newOptions.first;
+                    setState(() {});
+                  },
+                  headerKeyControllers: _headerKeyControllers,
+                  headerValueControllers: _headerValueControllers,
+                  onHeaderAddPressed: () {
+                    _headerKeyControllers.add(TextEditingController());
+                    _headerValueControllers.add(TextEditingController());
+                    setState(() {});
+                  },
+                  onHeaderRemovePressed: (int index) {
+                    _headerKeyControllers.removeAt(index);
+                    _headerValueControllers.removeAt(index);
+                    setState(() {});
+                  },
+                ),
               ),
             ],
           ),
